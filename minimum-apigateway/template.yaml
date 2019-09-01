@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  MyApi:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      StageName: 'dev'
+      DefinitionBody:
+        openapi: '3.0.1'
+        info:
+          title: 'MyRestApi'
+          version: 'v1'
+        paths:
+          /:
+            get:
+              responses:
+                '200':
+                  description: '200 response'
+              x-amazon-apigateway-integration:
+                responses:
+                  default:
+                    statusCode: '200'
+                type: 'mock'
