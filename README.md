@@ -30,3 +30,6 @@ https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-templat
 
 OpenAPI Specification | Swagger
 https://swagger.io/specification/
+
+OpenAPI に対する API Gateway 拡張 - Amazon API Gateway
+https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-swagger-extensions.html
