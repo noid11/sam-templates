@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  MyFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: 'index.lambda_handler'
+      Runtime: 'python3.6'
+      InlineCode: |
+        import json
+        import botocore
+        import boto3
+        from logging import getLogger, INFO, DEBUG
+        
+        # boto3.set_stream_logger()
+        # botocore.session.Session().set_debug_logger()
+        
+        logger = getLogger(__name__)
+        # logger.setLevel(DEBUG)
+        logger.setLevel(INFO)
+
+        def lambda_handler(event, context):
+
+            logger.info(json.dumps(event, ensure_ascii=False, indent=2))
+            return event
