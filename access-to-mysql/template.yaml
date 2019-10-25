@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  SecurityGroups:
+    Type: 'List<AWS::EC2::SecurityGroup::Id>'
+
+  SubnetIds:
+    Type: 'List<AWS::EC2::Subnet::Id>'
+
+  DatabaseUser:
+    Type: String
+
+  DatabasePassword:
+    Type: String
+
+  DatabaseHost:
+    Type: String
+
+  DatabaseName:
+    Type: String
+
+Globals:
+  Function:
+    Timeout: 300
+
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: hello_world/
+      Handler: app.lambda_handler
+      Runtime: python3.6
+      VpcConfig: 
+        SecurityGroupIds: !Ref SecurityGroups
+        SubnetIds: !Ref SubnetIds
+      Role: !GetAtt LambdaFunctionIamRole.Arn
+      Environment:
+        Variables:
+          USER: !Ref DatabaseUser
+          PASSWORD: !Ref DatabasePassword
+          HOST: !Ref DatabaseHost
+          DATABASE: !Ref DatabaseName
+
+  LambdaFunctionIamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+      Policies:
+        -
+          PolicyName: "iam_role_for_lambda"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action: "*"
+                Resource: "*"
