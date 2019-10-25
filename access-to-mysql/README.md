@@ -4,7 +4,7 @@
 
 ```bash
 STACK_NAME=vpclambdatomysql
-S3_BUCKET=ibukito
+S3_BUCKET=mybucket
 SECURITY_GROUP=sg-xxxx
 SUBNET_ID=subnet-xxx
 DATABASE_USER=sampleuser
