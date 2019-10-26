@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  SecurityGroups:
+    Type: 'List<AWS::EC2::SecurityGroup::Id>'
+
+  SubnetIds:
+    Type: 'List<AWS::EC2::Subnet::Id>'
+
+Globals:
+  Function:
+    Timeout: 300
+
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.lambda_handler
+      Runtime: python3.6
+      VpcConfig: 
+        SecurityGroupIds: !Ref SecurityGroups
+        SubnetIds: !Ref SubnetIds
+      Role: !GetAtt LambdaFunctionIamRole.Arn
+      InlineCode: |
+        import json
+        def lambda_handler(event, context):
+            # TODO implement
+            return {
+                'statusCode': 200,
+                'body': json.dumps('Hello from Lambda!')
+            }
+  LambdaFunctionIamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+      Policies:
+        -
+          PolicyName: "iam_role_for_lambda"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action: "*"
+                Resource: "*"
