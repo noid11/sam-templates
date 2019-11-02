@@ -31,6 +31,7 @@ Resources:
       CodeUri: hello_world/
       Handler: app.lambda_handler
       Runtime: python3.6
+      Tracing: Active
       VpcConfig: 
         SecurityGroupIds: !Ref SecurityGroups
         SubnetIds: !Ref SubnetIds
