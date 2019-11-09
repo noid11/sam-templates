@@ -6,6 +6,7 @@ Resources:
     Properties:
       Handler: 'index.lambda_handler'
       Runtime: 'python3.6'
+      Role: !GetAtt LambdaFunctionIamRole.Arn
       InlineCode: |
         import json
         import botocore
@@ -23,3 +24,24 @@ Resources:
 
             logger.info(json.dumps(event, ensure_ascii=False, indent=2))
             return event
+
+  LambdaFunctionIamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Policies:
+        -
+          PolicyName: 'iam_role_for_lambda'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              -
+                Effect: 'Allow'
+                Action: '*'
+                Resource: '*'
