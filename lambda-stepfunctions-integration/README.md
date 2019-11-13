@@ -1,5 +1,9 @@
 # Lambda Step Functions Integration
 
+State Machine that ivnoke Lambda Function
+
+![state-machine](https://raw.githubusercontent.com/itooww/sam-templates/master/lambda-stepfunctions-integration/state-machine.png)
+
 # Useful commands
 
 ```bash
