@@ -10,6 +10,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-lambda-go/lambdacontext"
 	"github.com/aws/aws-xray-sdk-go/xray"
 	"golang.org/x/net/context/ctxhttp"
 )
@@ -26,7 +27,8 @@ var (
 )
 
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	fmt.Printf("%+v\n", ctx)
+	lambdaContext, _ := lambdacontext.FromContext(ctx)
+	fmt.Printf("%+v\n", lambdaContext)
 	fmt.Printf("%+v\n", request)
 
 	tr := &http.Transport{
