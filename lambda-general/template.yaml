@@ -20,6 +20,8 @@ Resources:
         # logger.setLevel(DEBUG)
         logger.setLevel(INFO)
 
+        logger.info("init")
+
         def lambda_handler(event, context):
 
             logger.info(json.dumps(event, ensure_ascii=False, indent=2))
